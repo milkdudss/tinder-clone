@@ -2,10 +2,7 @@ import React from 'react';
 import whiteLogo from '../images/white-logo-tinder.png';
 import colorLogo from '../images/color-logo-tinder.png';
 
-
 function Nav({minimal, authToken}) {
-
-    // const minimal = true;
 
   return (
     <nav>
@@ -14,9 +11,7 @@ function Nav({minimal, authToken}) {
 
         </div>
         {!authToken && !minimal && <button className='nav-button'>Log in</button>}
-
     </nav>
   )
 }
-
 export default Nav

@@ -1,7 +1,6 @@
 import React from 'react';
 import Nav from '../components/Nav';
 
-
 const Home = () => {
 
   const authToken = false
@@ -16,11 +15,9 @@ const Home = () => {
       <div className="home">
         <h1>Swipe Right®</h1>
         <button className='primary-button' onClick= {handleClick}>
-          {authToken ? 'Signout' : 'Create Account'}
+        {authToken ? 'Signout' : 'Create Account'}
         </button>
-
       </div>
-
     </div>
   )
 }
