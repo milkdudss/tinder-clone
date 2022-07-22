@@ -1,26 +1,38 @@
 import { useState } from 'react'
 import Nav from '../components/Nav'
+import '../index.css'
 
 const Onboarding = () => {
 
-  const handleChange = (e) => {
+  const [formData, setFormData] = useState({
+    first_name: "",
+    dob_day: "",
+    dob_month: "",
+    dob_year: "",
+    show_gender: false,
+    gender_identity: "man",
+    gender_interest: "woman",
+    url: "",
+    about: "",
+    matches: []
+  })
 
+  const handleChange = (e) => {
+    console.log(e.target.value, e.target.name);
+    setFormData(prevState => ({...prevState, [e.target.name]: e.target.value}))
   }
 
   const handleSubmit = (e) => {
 
   }
 
-  const formData = {}
-
   return (
     <>
     <Nav 
-      minimal={true}
-      setShowModal={() => {}}
-      showModal={false}
+        minimal={true}
+        setShowModal={() => {}}
+        showModal={false}
     />
-    
     <div className="onboarding">
         <h2>CREATE ACCOUNT</h2>
 
