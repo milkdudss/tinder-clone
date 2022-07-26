@@ -18,8 +18,14 @@ const Onboarding = () => {
   })
 
   const handleChange = (e) => {
-    console.log(e.target.value, e.target.name);
-    setFormData(prevState => ({...prevState, [e.target.name]: e.target.value}))
+    console.log(e.target.checked, e.target.value, e.target.name, e);
+    const value = e.target.type === "checkbox" ? e.target.checked : e.target.value
+    const name = e.target.name
+
+    setFormData((prevState) => ({
+        ...prevState,
+        [name]: value
+    }))
   }
 
   const handleSubmit = (e) => {
@@ -114,14 +120,15 @@ const Onboarding = () => {
                 </div>
 
                 <label htmlFor="show-gender">Show Gender on my Profile</label>
-
-                <input
-                    id="show-gender"
-                    type="checkbox"
-                    name="show_gender"
-                    onChange={handleChange}
-                    checked={formData.show_gender}
-                />
+                <div className="show-gender-checkbox">
+                  <input
+                      id="show-gender"
+                      type="checkbox"
+                      name="show_gender"
+                      onChange={handleChange}
+                      checked={formData.show_gender}
+                  />
+                </div>
 
                 <label>Show Me</label>
 
@@ -182,6 +189,7 @@ const Onboarding = () => {
                 />
                 <div className="photo-container">
                     {formData.url && <img src={formData.url} alt="profile pic preview"/>}
+                    <img src="https://i.imgur.com/oPj4A8u.jpg" alt="profile pic preview"/>
                 </div>
 
 

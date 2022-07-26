@@ -154,6 +154,7 @@
  
  .onboarding form label {
      margin: 10px 0;
+     text-align: left;
  }
  
  .onboarding form .multiple-input-container {
@@ -201,4 +202,12 @@
  
  .onboarding form .photo-container img {
      width: 100%
+ }
+ 
+ .show-gender-checkbox {
+     display: flex;
+ }
+ 
+ #show-gender {
+     margin: 1rem 0;
  }
