@@ -18,7 +18,7 @@ const Onboarding = () => {
   })
 
   const handleChange = (e) => {
-    console.log(e.target.checked, e.target.value, e.target.name, e);
+    console.log(e.target.value, e.target.name, e.target.checked, e);
     const value = e.target.type === "checkbox" ? e.target.checked : e.target.value
     const name = e.target.name
 
@@ -29,7 +29,7 @@ const Onboarding = () => {
   }
 
   const handleSubmit = (e) => {
-
+    console.log("Submitted!");
   }
 
   return (
@@ -178,7 +178,6 @@ const Onboarding = () => {
             </section>
 
             <section>
-
                 <label htmlFor="url">Profile Photo</label>
                 <input
                     type="url"
@@ -189,10 +188,7 @@ const Onboarding = () => {
                 />
                 <div className="photo-container">
                     {formData.url && <img src={formData.url} alt="profile pic preview"/>}
-                    <img src="https://i.imgur.com/oPj4A8u.jpg" alt="profile pic preview"/>
                 </div>
-
-
             </section>
 
         </form>
