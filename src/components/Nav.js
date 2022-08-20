@@ -12,7 +12,7 @@ function Nav({ minimal, authToken, setShowModal, showModal, setIsSignUp }) {
   return (
     <nav>
         <div className='logo-container'>
-            <img className='logo' src={minimal ? colorLogo : whiteLogo} />
+            <img className='logo' src={minimal ? colorLogo : whiteLogo} alt="logo" />
 
         </div>
         {!authToken && !minimal && <button 
