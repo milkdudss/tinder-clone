@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const ChatInput = () => {
+    const [textArea, setTextArea] = useState(null);
+
     return (
-        <div className="chat-input">ChatInput</div>
+        <div className="chat-input">
+            <textarea value="" 
+                onChange={e => setTextArea(e.target.value)}
+            />
+            <button className="secondary-button">Submit</button>
+        </div>
     )
 }
 
