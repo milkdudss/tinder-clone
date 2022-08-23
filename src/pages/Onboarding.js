@@ -1,6 +1,7 @@
-import { useState } from 'react'
-import Nav from '../components/Nav'
-import '../index.css'
+import React from 'react';
+import { useState } from 'react';
+import Nav from '../components/Nav';
+import '../index.css';
 
 const Onboarding = () => {
 
