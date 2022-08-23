@@ -10,6 +10,8 @@ const AuthModal = ({setShowModal, isSignUp}) => {
     const [ error, setError ] = useState(null);
 
     let navigate = useNavigate();
+
+    console.log(email, password, confirmPassword);
     
     const handleClick = () => {
         setShowModal(false);
