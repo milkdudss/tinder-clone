@@ -309,10 +309,16 @@
  .chat-display,
  .matches-display {
      padding: 20px;
-     height: 60vh;
+     /* height: 60vh; */
      overflow-y: auto;
  }
  /*-------- Chat Input --------*/
+ 
+ .bottom-fix {
+     position: fixed;
+     bottom: 0;
+     width: 30%;
+ }
  
  .chat-input {
      padding: 20px;

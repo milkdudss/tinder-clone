@@ -1,11 +1,16 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import Nav from '../components/Nav';
 import '../index.css';
 
 const Onboarding = () => {
+  const [ cookies, setCookie, removeCookie] = useCookies(['user']);
 
   const [formData, setFormData] = useState({
+    user_id: cookies.UserId,
+    // email: cookies.Email,
     first_name: "",
     dob_day: "",
     dob_month: "",
@@ -18,8 +23,10 @@ const Onboarding = () => {
     matches: []
   })
 
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
-    console.log(e.target.value, e.target.name, e.target.checked, e);
+    // console.log(e.target.value, e.target.name, e.target.checked, e);
     const value = e.target.type === "checkbox" ? e.target.checked : e.target.value
     const name = e.target.name
 
@@ -29,8 +36,20 @@ const Onboarding = () => {
     }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     console.log("Submitted!");
+    e.preventDefault();
+    try {
+        const response = await axios.put('http://localhost:8000/user', {formData});
+
+        const success = response.status === 200;
+        if (success) navigate ('/dashboard');
+
+        window.location.reload();
+    }
+    catch(error) {
+        console.log(error);
+    }
   }
 
   return (
