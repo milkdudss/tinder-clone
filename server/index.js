@@ -98,7 +98,6 @@ app.get('/user', async (req, res) => {
     } finally {
         await client.close();
     }
-
 })
 
 app.get('/users', async (req, res) => {
