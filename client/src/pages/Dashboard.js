@@ -1,9 +1,34 @@
 import React from "react";
 import TinderCard from "react-tinder-card";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useCookies } from 'react-cookie';
 import ChatContainer from '../components/ChatContainer';
+import axios from 'axios';
+
 
 const Dashboard = () => {
+  const [user, setUser] = useState(null);
+  const [cookies] = useCookies(['user']);
+
+  // Get request user data responses are pulled from Mongdb database
+  const userId = cookies.UserId
+  const getUser = async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/user', {
+        params: { userId }
+      })
+      setUser(response.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    getUser()
+  }, [])
+
+  console.log('user', user);
+
   const db = [
     {
       name: "Richard Hendricks",
@@ -39,8 +64,10 @@ const Dashboard = () => {
     console.log(name + " left the screen!");
   };
   return (
+    <>
+    { user && 
     <div className="dashboard">
-      <ChatContainer/>
+      <ChatContainer user={user} />
       <div className="swipe-container">
         <div className="card-container">
           {characters.map((character) => (
@@ -62,7 +89,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div>}</>
   );
 };
 
