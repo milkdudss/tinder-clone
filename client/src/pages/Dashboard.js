@@ -8,10 +8,13 @@ import axios from 'axios';
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
+  const [genderedUsers, setGenderedUsers] = useState(null);
   const [cookies] = useCookies(['user']);
+  const [lastDirection, setLastDirection] = useState();
 
   // Get request user data responses are pulled from Mongdb database
-  const userId = cookies.UserId
+  const userId = cookies.UserId;
+
   const getUser = async () => {
     try {
       const response = await axios.get('http://localhost:8000/user', {
@@ -23,11 +26,30 @@ const Dashboard = () => {
     }
   }
 
-  useEffect(() => {
-    getUser()
-  }, [])
+  const getGenderedUsers = async () => {
+    try {
+        const response = await axios.get('http://localhost:8000/gendered-users', {
+            params: {gender: user.gender_interest}
+        })
+        setGenderedUsers(response.data)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+useEffect(() => {
+  getUser()
+
+}, [])
+
+useEffect(() => {
+  if (user) {
+      getGenderedUsers()
+  }
+}, [user])
 
   console.log('user', user);
+  console.log('gendered users', genderedUsers);
 
   const db = [
     {
@@ -53,7 +75,6 @@ const Dashboard = () => {
   ];
 
   const characters = db;
-  const [lastDirection, setLastDirection] = useState();
 
   const swiped = (direction, nameToDelete) => {
     console.log("removing: " + nameToDelete);
