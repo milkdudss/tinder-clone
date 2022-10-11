@@ -50,8 +50,23 @@ useEffect(() => {
   console.log('user', user);
   console.log('gendered users', genderedUsers);
 
-  const swiped = (direction, nameToDelete) => {
-    console.log("removing: " + nameToDelete);
+  const updateMatches = async (matchedUserId) => {
+    try {
+        await axios.put('http://localhost:8000/addmatch', {
+            userId,
+            matchedUserId
+        })
+        getUser()
+        
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+  const swiped = (direction, swipedUserId) => {
+    if (direction === 'right') {
+      updateMatches(swipedUserId)
+    }
     setLastDirection(direction);
   };
 
@@ -66,17 +81,17 @@ useEffect(() => {
       <div className="swipe-container">
         <div className="card-container">
           {genderedUsers && 
-            genderedUsers.map((character) => (
+            genderedUsers.map((genderedUser) => (
               <TinderCard
                 className="swipe"
-                key={character.name}
-                onSwipe={(dir) => swiped(dir, character.name)}
-                onCardLeftScreen={() => outOfFrame(character.name)}
+                key={genderedUser.user_id}
+                onSwipe={(dir) => swiped(dir, genderedUser.user_id)}
+                onCardLeftScreen={() => outOfFrame(genderedUser.first_name)}
               >
                 <div
-                  style={{ backgroundImage: "url(" + character.url + ")" }}
+                  style={{ backgroundImage: "url(" + genderedUser.url + ")" }}
                   className="card">
-                  <h3>{character.name}</h3>
+                  <h3>{genderedUser.first_name}</h3>
                 </div>
               </TinderCard>
           ))}
