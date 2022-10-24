@@ -3,7 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 
-const MatchesDisplay = ({matches}) => {
+const MatchesDisplay = ({matches, setClickedUser}) => {
 
     const [matchedProfiles, setMatchedProfiles] = useState(null);
     const [cookies, setCookie, removeCookie] = useCookies(null);
@@ -25,10 +25,23 @@ const MatchesDisplay = ({matches}) => {
     useEffect(() => {
         getMatches();
     }, [matches]);
-    
+
+    console.log("matchedProfiles", matchedProfiles)
+
     return (
         <div className="matches-display">
-            MatchesDisplay
+            {matchedProfiles?.map((match, _index) => (
+                <div
+                    key={_index}
+                    className="match-card"
+                    onClick={() => setClickedUser(match)}
+                >
+                    <div className="img-container">
+                        <img src={match?.url} alt={match?.first_name + " profile"} />
+                    </div>
+                    <h3>{match?.first_name}</h3>
+                </div>
+            ))}
         </div>
     )
 }
