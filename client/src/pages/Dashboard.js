@@ -46,6 +46,7 @@ useEffect(() => {
       getGenderedUsers()
   }
 }, [user])
+// }, [user, genderedUsers])
 
   console.log('user', user);
   console.log('gendered users', genderedUsers);
