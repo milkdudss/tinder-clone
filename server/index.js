@@ -102,15 +102,50 @@ app.get('/user', async (req, res) => {
     }
 })
 
+// Get all Users by userIds in the Database
 app.get('/users', async (req, res) => {
+    const client = new MongoClient(uri)
+    const userIds = JSON.parse(req.query.userIds)
+
+    try {
+        await client.connect()
+        const database = client.db('app-data')
+        const users = database.collection('users')
+
+        const pipeline =
+            [
+                {
+                    '$match': {
+                        'user_id': {
+                            '$in': userIds
+                        }
+                    }
+                }
+            ]
+
+        const foundUsers = await users.aggregate(pipeline).toArray()
+        console.log('foundUsers', foundUsers)
+        res.send(foundUsers)
+        // res.json(foundUsers)
+
+    } finally {
+        await client.close()
+    }
+})
+
+// Get all the Gendered Users in the Database
+app.get('/gendered-users', async (req, res) => {
     const client = new MongoClient(uri);
+    const gender = req.query.gender;
 
     try {
         await client.connect();
         const database = client.db('app-data');
         const users = database.collection("users");
-        const returnedUsers = await users.find().toArray();
-        res.send(returnedUsers);
+        const query = {gender_identity: {$eq: gender}};
+        const foundUsers = await users.find(query).toArray();
+        // res.json(foundUsers);
+        res.send(foundUsers);
     }
     finally {
         await client.close();
@@ -149,6 +184,28 @@ app.put('/user', async (req, res) => {
 
     } finally {
         await client.close();
+    }
+})
+
+// Update User with a match
+app.put('/addmatch', async (req, res) => {
+    const client = new MongoClient(uri)
+    const {userId, matchedUserId} = req.body
+
+    try {
+        await client.connect()
+        const database = client.db('app-data')
+        const users = database.collection('users')
+
+        const query = {user_id: userId}
+        const updateDocument = {
+            $push: {matches: {user_id: matchedUserId}}
+        }
+        const user = await users.updateOne(query, updateDocument)
+        res.send(user)
+        
+    } finally {
+        await client.close()
     }
 })
 
